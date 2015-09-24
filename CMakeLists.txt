@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.3)
+project(FruitsCounter)
+set(OpenCV_DIR "")
+add_executable(main main.cpp)
+find_package(OpenCV)
