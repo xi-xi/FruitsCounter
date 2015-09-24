@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.3)
 project(FruitsCounter)
-set(OpenCV_DIR "")
+set(OpenCV_DIR "Where" CACHE PATH "Location of opencv_install_dir")
 add_executable(main main.cpp)
 find_package(OpenCV)
