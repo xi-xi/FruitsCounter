@@ -1,27 +1,45 @@
 #include "TimeLapse.hpp"
 
 #include <string>
-#include <filesystem>
+#include <boost/filesystem.hpp>
 #include <opencv2/imgcodecs.hpp>
 
 TimeLapse::TimeLapse(){
 }
 
-TimeLapse::TimeLapse(const std::string& dirname) {
+TimeLapse::TimeLapse(const std::string& dirname):TimeLapse(){
+	this->open(dirname);
 }
 
-TimeLapse::~TimeLapse() {
+TimeLapse::~TimeLapse(){
 
 }
 
-bool TimeLapse::open(const std::string& dirname) {
+bool TimeLapse::open(const std::string& dirname){
+	using namespace boost::filesystem;
+	auto dirpath = path(dirname);
+	if (!is_directory(dirpath)) {
+		return false;
+	}
+	frame_paths_.clear();
+	for (const auto& file : directory_iterator(dirpath)) {
+		if (is_regular(file)) {
+			this->frame_paths_.push_back(file);
+		}
+	}
+	if (this->frame_paths_.empty()) {
+		return false;
+	}
+	std::sort(this->frame_paths_.begin(), this->frame_paths_.end());
 	return true;
 }
 
-bool TimeLapse::isOpened()const {
-	return true;
+bool TimeLapse::isOpened()const{
+	return this->frame_paths_.size() > current_frame_;
 }
 
-bool TimeLapse::read(cv::Mat& image) {
-	return true;
+bool TimeLapse::read(cv::Mat& image){
+	image = cv::imread(this->frame_paths_[this->current_frame_].string());
+	this->current_frame_++;
+	return !image.empty();
 }
