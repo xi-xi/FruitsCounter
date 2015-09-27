@@ -9,13 +9,13 @@ int main(int argc, char** argv){
 	std::cout << flg << std::endl;
 	cv::namedWindow("TEST");
 	cv::Mat frame;
-	while (true) {
+	while (timelapse.isOpened()) {
 		timelapse >> frame;
 		if (frame.empty()) {
 			break;
 		}
 		cv::imshow("TEST", frame);
-		cv::waitKey(33);
+		cv::waitKey(16);
 	}
     return 0;
 }
