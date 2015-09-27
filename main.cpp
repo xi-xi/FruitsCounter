@@ -19,7 +19,9 @@ int main(int argc, char** argv){
 	while (timelapse.isOpened()) {
 		timelapse >> frame;
 		cv::imshow("TEST", frame);
-		cv::waitKey(33);
+		if (cv::waitKey(33) == 'q') {
+			break;
+		}
 	}
     return 0;
 }
