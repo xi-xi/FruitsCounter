@@ -1,12 +1,27 @@
 cmake_minimum_required(VERSION 3.3)
 project(FruitsCounter)
+
 set(OpenCV_DIR "Where" CACHE PATH "Location of opencv_install_dir")
+set(BOOST_ROOT "Where" CACHE PATH "Location of boost install dir")
+# set(BOOST_LIBRARYDIR "Where" CACHE PATH "Location of boost lib dir")
+set(Boost_USE_STATIC_LIBS        OFF)
+set(Boost_USE_MULTITHREADED      ON)
+set(Boost_USE_STATIC_RUNTIME    OFF)
+
 file(GLOB SOURCES *.cpp)
 file(GLOB HEADERS *.hp*)
 add_executable(main ${SOURCES} ${HEADERS})
+
 find_package(OpenCV)
 if(OpenCV_FOUND)
     include_directories(${OpenCV_INCLUDE_DIRS})
     link_directories(${OpenCV_LIB_DIR})
     target_link_libraries(main ${OpenCV_LIBS})
+endif()
+
+find_package(Boost)
+if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+    link_directories(${Boost_LIBRARY_DIRS})
+    target_link_libraries(main ${Boost_LIBRARIES})
 endif()
