@@ -43,3 +43,20 @@ bool TimeLapse::read(cv::Mat& image){
 	this->current_frame_++;
 	return !image.empty();
 }
+
+bool TimeLapse::read(const std::size_t& frame, cv::Mat& image) {
+	image = cv::imread(this->frame_paths_[frame].string());
+	return !image.empty();
+}
+
+std::size_t TimeLapse::totalFrames()const {
+	return this->frame_paths_.size();
+}
+
+std::size_t TimeLapse::currentFrame()const {
+	return this->current_frame_ - 1;
+}
+
+void TimeLapse::setCurrentFrame(const std::size_t& value) {
+	this->current_frame_ = value;
+}

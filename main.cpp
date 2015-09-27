@@ -4,16 +4,11 @@
 #include "TimeLapse.hpp"
 
 int main(int argc, char** argv){
-	TimeLapse timelapse;
-	bool flg = timelapse.open("C:/Users/Takumi/Videos/ichigo");
-	std::cout << flg << std::endl;
+	TimeLapse timelapse("C:/Users/Takumi/Videos/ichigo");
 	cv::namedWindow("TEST");
 	cv::Mat frame;
 	while (timelapse.isOpened()) {
 		timelapse >> frame;
-		if (frame.empty()) {
-			break;
-		}
 		cv::imshow("TEST", frame);
 		cv::waitKey(16);
 	}
