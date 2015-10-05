@@ -1,6 +1,7 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
 #include "TimeLapse.hpp"
+#include "MJpegStream.hpp"
 
 void showHelp() {
 	std::cout << "Usage:\n"
@@ -9,19 +10,28 @@ void showHelp() {
 }
 
 int main(int argc, char** argv){
-	if (argc <= 1) {
-		showHelp();
-		return 1;
+	MJpegStream stream;
+	auto code = stream.connect("mjpeg.sanford.io", "count.mjpeg", "80");
+	if (code != 0) {
+		std::cout << stream.getLastErrorMessage() << std::endl;
 	}
-	TimeLapse timelapse(argv[1]);
-	cv::namedWindow("TEST");
-	cv::Mat frame;
-	while (timelapse.isOpened()) {
-		timelapse >> frame;
-		cv::imshow("TEST", frame);
-		if (cv::waitKey(33) == 'q') {
-			break;
+	else {
+		std::cout << "No Error" << std::endl;
+		cv::namedWindow("N");
+		cv::Mat frame;
+		while (stream.isConnected())
+		{
+			//std::cout << stream.getLastErrorMessage() << std::endl;
+			stream >> frame;
+			if (!frame.empty())
+			{
+				cv::imshow("N", frame);
+			}
+			if (cv::waitKey(33) == 'q') {
+				break;
+			}
 		}
+		std::cout << stream.getLastErrorMessage();
 	}
     return 0;
 }
