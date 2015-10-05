@@ -27,7 +27,7 @@ int main(int argc, char** argv){
 			{
 				cv::imshow("N", frame);
 			}
-			if (cv::waitKey(33) == 'q') {
+			if (cv::waitKey(10000) == 'q') {
 				break;
 			}
 		}
