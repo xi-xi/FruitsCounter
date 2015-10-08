@@ -12,7 +12,7 @@
  */
 class MJpegStream {
 private:
-	const std::size_t REQUEST_SIZE = 1024;
+	const std::size_t REQUEST_SIZE = 2048;
 	boost::asio::io_service io_service_;
 	boost::system::error_code last_error_code_;
 	boost::asio::streambuf request_;

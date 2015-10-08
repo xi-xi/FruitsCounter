@@ -11,7 +11,7 @@ void showHelp() {
 
 int main(int argc, char** argv){
 	MJpegStream stream;
-	auto code = stream.connect("mjpeg.sanford.io", "count.mjpeg", "80");
+	auto code = stream.connect("172.16.0.254", "", "9176");
 	if (code != 0) {
 		std::cout << stream.getLastErrorMessage() << std::endl;
 	}
@@ -27,7 +27,7 @@ int main(int argc, char** argv){
 			{
 				cv::imshow("N", frame);
 			}
-			if (cv::waitKey(10000) == 'q') {
+			if (cv::waitKey(33) == 'q') {
 				break;
 			}
 		}
