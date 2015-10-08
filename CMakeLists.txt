@@ -20,7 +20,7 @@ if(OpenCV_FOUND)
     target_link_libraries(main ${OpenCV_LIBS})
 endif()
 
-find_package(Boost REQUIRED COMPONENTS filesystem system)
+find_package(Boost REQUIRED COMPONENTS filesystem system date_time regex thread chrono)
 if(Boost_FOUND)
     message(STATUS "Boost_INCLUDE_DIRS:${Boost_INCLUDE_DIRS}")
     message(STATUS "Boost_LIBRARY_DIRS:${Boost_LIBRARY_DIRS}")
