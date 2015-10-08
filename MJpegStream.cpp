@@ -3,7 +3,8 @@
 #include <sstream>
 #include <opencv2/highgui.hpp>
 
-MJpegStream::MJpegStream() {
+MJpegStream::MJpegStream(const std::size_t& request_size)
+	:REQUEST_SIZE(request_size){
 }
 
 void MJpegStream::buildRequest(const std::string& host, const std::string& file) {

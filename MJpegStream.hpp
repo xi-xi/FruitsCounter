@@ -12,7 +12,7 @@
  */
 class MJpegStream {
 private:
-	const std::size_t REQUEST_SIZE = 2048;
+	const std::size_t REQUEST_SIZE;
 	boost::asio::io_service io_service_;
 	boost::system::error_code last_error_code_;
 	boost::asio::streambuf request_;
@@ -31,7 +31,7 @@ private:
 	void stripAImage();
 	void endInit();
 public:
-	MJpegStream();
+	MJpegStream(const std::size_t& request_size=1024);
 	int connect(const std::string& host, const std::string& file, const std::string& port);
 	void close();
 	bool isConnected();
