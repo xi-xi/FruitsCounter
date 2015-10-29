@@ -10,7 +10,7 @@ int main(int argc, char** argv){
 		stream.open(argv[1]);
 	}
 	else {
-		stream.open("tomato");
+		stream.open("./tomato");
 	}
 	std::cout << "No Error" << std::endl;
 	cv::namedWindow("N");
