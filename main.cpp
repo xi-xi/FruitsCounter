@@ -6,7 +6,12 @@
 
 int main(int argc, char** argv){
 	TimeLapse stream;
-	stream.open(argv[1]);
+	if (argc >= 2) {
+		stream.open(argv[1]);
+	}
+	else {
+		stream.open("tomato");
+	}
 	std::cout << "No Error" << std::endl;
 	cv::namedWindow("N");
 	cv::Mat frame;
