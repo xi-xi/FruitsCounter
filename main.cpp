@@ -1,37 +1,29 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
+#include <dlib/opencv.h>
+#include <dlib/gui_widgets.h>
 #include "TimeLapse.hpp"
-#include "MJpegStream.hpp"
-
-void showHelp() {
-	std::cout << "Usage:\n"
-		<< "\tmain <input_directory>"
-		<< std::endl;
-}
 
 int main(int argc, char** argv){
-	MJpegStream stream;
-	auto code = stream.connect("172.16.0.254", "", "9176");
-	if (code != 0) {
-		std::cout << stream.getLastErrorMessage() << std::endl;
-	}
-	else {
-		std::cout << "No Error" << std::endl;
-		cv::namedWindow("N");
-		cv::Mat frame;
-		while (stream.isConnected())
+	TimeLapse stream;
+	stream.open(argv[1]);
+	std::cout << "No Error" << std::endl;
+	cv::namedWindow("N");
+	cv::Mat frame;
+	dlib::image_window dlibw;
+	while(stream.isOpened())
+	{
+		stream >> frame;
+		dlib::cv_image<dlib::bgr_pixel> dlibimg(frame);
+		if (!frame.empty())
 		{
-			//std::cout << stream.getLastErrorMessage() << std::endl;
-			stream >> frame;
-			if (!frame.empty())
-			{
-				cv::imshow("N", frame);
-			}
-			if (cv::waitKey(33) == 'q') {
-				break;
-			}
+			cv::imshow("N", frame);
 		}
-		std::cout << stream.getLastErrorMessage();
+		dlibw.clear_overlay();
+		dlibw.set_image(dlibimg);
+		if (cv::waitKey(33) == 'q') {
+			break;
+		}
 	}
     return 0;
 }
