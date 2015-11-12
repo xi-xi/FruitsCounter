@@ -2,66 +2,9 @@
 #include <vector>
 #include <algorithm>
 #include <opencv2/opencv.hpp>
-#include <dlib/opencv.h>
-#include <dlib/gui_widgets.h>
-#include <dlib/image_processing/generic_image.h>
-#include <dlib/image_transforms.h>
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
-#include "TimeLapse.hpp"
-
-template<class Functor>
-void findObjectRectangle(const cv::Mat& input, std::vector<cv::Rect>& rects, Functor func) {
-	dlib::cv_image<dlib::bgr_pixel> dlibimg(input);
-	std::vector<dlib::rectangle> dlibrects;
-	dlib::find_candidate_object_locations(
-		dlibimg,
-		dlibrects,
-		dlib::linspace(50, 200, 3),
-		20 * 20
-		);
-	for (const auto& rect : dlibrects) {
-		if (func(rect, input)) {
-			rects.push_back(cv::Rect(rect.left(), rect.top(), rect.width(), rect.height()));
-		}
-	}
-}
-
-void extract_objects(const boost::filesystem::path& input_path, const boost::filesystem::path& output_path) {
-	cv::Mat frame = cv::imread(input_path.string());
-	std::vector<cv::Rect> rects;
-	::findObjectRectangle(
-		frame,
-		rects,
-		[](const dlib::rectangle& rect, const cv::Mat& frame) {
-			return rect.width() > 20
-				&& rect.height() > 20
-				&& rect.width() < 200
-				&& rect.height() < 200;
-		}
-	);
-	std::size_t num = 0;
-	for (const auto& rect : rects) {
-		std::stringstream ss;
-		ss << num << ".png";
-		cv::imwrite((output_path / ss.str()).string(), frame(rect));
-		num++;
-	}
-}
-
-cv::Size getHOGWinSize() {
-	return cv::Size(128, 64);
-}
-
-cv::HOGDescriptor getDefaultHOGDescriptor() {
-	return cv::HOGDescriptor(
-		::getHOGWinSize(),
-		cv::Size(16, 16),
-		cv::Size(8, 8),
-		cv::Size(8, 8),
-		9
-	);
-}
+#include "HogUtil.hpp"
 
 void calcHOGDescripter(const cv::Mat& img, std::vector<float>& desc) {
 	static auto hog = ::getDefaultHOGDescriptor();
@@ -69,7 +12,7 @@ void calcHOGDescripter(const cv::Mat& img, std::vector<float>& desc) {
 	cv::Mat gray;
 	cv::cvtColor(img, gray, cv::COLOR_BGR2GRAY);
 	cv::resize(gray, gray, ::getHOGWinSize());
-	hog.compute(gray, desc, cv::Size(8,8), cv::Size(0,0));
+	hog.compute(gray, desc, cv::Size(8, 8), cv::Size(0, 0));
 }
 
 void descriptorToTraindata(const std::vector<std::vector<float>>& descs, cv::Mat& train_data) {
@@ -153,54 +96,20 @@ void train(const boost::filesystem::path& positive_path, const boost::filesystem
 		std::cout << r << std::endl;
 	}
 	svm->save(output_path.string());
-	cv::HOGDescriptor detector = ::getDefaultHOGDescriptor();
-	std::vector<float> hog_detector;
-	::get_svm_detector(svm, hog_detector);
-	std::cout << detector.getDefaultPeopleDetector().size() << std::endl;
-	std::cout << hog_detector.size() << " " << detector.getDescriptorSize() << std::endl;
-	detector.setSVMDetector(hog_detector);
-	auto frame = cv::imread("C:/Users/Takumi/Source/FruitsCounter/build/tomato/01800.png");
-	std::vector<cv::Rect> rects;
-	detector.detectMultiScale(frame, rects);
-	std::size_t index = 0;
-	for (const auto& rect : rects) {
-		std::stringstream ss;
-		ss << "select_result/res_" << index << "_13.png";
-		cv::imwrite(ss.str(), frame(rect));
-		index++;
-	}
-	for (const auto& rect : rects) {
-		cv::rectangle(frame, rect, cv::Scalar(0, 0, 255), 3);
-	}
-	std::cout << "tomato:" << rects.size() << std::endl;
-	cv::namedWindow("T");
-	cv::imshow("T", frame);
-	cv::waitKey();
-	cv::imwrite("detect_test.png", frame);
 }
 
-int main(int argc, char** argv){
+int main(int argc, char** argv) {
 	namespace bp = boost::program_options;
 	namespace bf = boost::filesystem;
-	bp::options_description general_opt("Genral Options");
+	bp::options_description general_opt("Allowed Options");
 	general_opt.add_options()
 		("help,h", "Show help")
-		("extract,e", "Use Extract Mode")
-		("training,t", "Use Training Mode");
-	bp::options_description extract_option("Extract Options");
-	extract_option.add_options()
-		("input,i", bp::value<bf::path>(), "Input image or directory.")
-		("dir,d", bp::value<bf::path>(), "Output directory.");
-	bp::options_description train_option("Training Options");
-	train_option.add_options()
 		("positive,p", bp::value<bf::path>(), "Positive image directory.")
 		("negative,n", bp::value<bf::path>(), "Negative image directory.")
 		("output,o", bp::value<bf::path>(), "Train data output path.");
-	bp::options_description all("Allowed Options");
-	all.add(general_opt).add(extract_option).add(train_option);
 	bp::variables_map map;
 	try {
-		bp::store(bp::parse_command_line(argc, argv, all), map);
+		bp::store(bp::parse_command_line(argc, argv, general_opt), map);
 		bp::notify(map);
 	}
 	catch (const bp::error& e) {
@@ -208,26 +117,13 @@ int main(int argc, char** argv){
 		return -1;
 	}
 	if (map.count("help")) {
-		std::cout << all;
+		std::cout << general_opt;
 	}
-	else if (map.count("extract")) {
-		if (map.count("input") && map.count("dir")) {
-			::extract_objects(map["input"].as<bf::path>(), map["dir"].as<bf::path>());
-		}
-		else {
-			std::cout << "In Extract mode, you must be set 'input' and 'output' options!!." << std::endl;
-		}
-	}
-	else if (map.count("training")) {
-		if (map.count("positive") && map.count("negative") && map.count("output")) {
-			::train(map["positive"].as<bf::path>(), map["negative"].as<bf::path>(), map["output"].as<bf::path>());
-		}
-		else {
-			std::cout << "In Training mode, you must be set 'positve', 'negative' and 'output' options!!." << std::endl;
-		}
+	if (map.count("positive") && map.count("negative") && map.count("output")) {
+		::train(map["positive"].as<bf::path>(), map["negative"].as<bf::path>(), map["output"].as<bf::path>());
 	}
 	else {
-		std::cout << "Please set a mode !!\n" << all;
+		std::cerr << "ERROR: You must be set 'positve', 'negative' and 'output' options!!." << std::endl;
 	}
-    return 0;
+	return 0;
 }

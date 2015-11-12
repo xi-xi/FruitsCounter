@@ -7,10 +7,6 @@ set(BOOST_LIBRARYDIR "Where" CACHE PATH "Location of boost lib dir")
 set(DLIB_ROOT "where" CACHE PATH "Location of dlib root dir")
 set(Boost_USE_STATIC_LIBS ON)
 
-file(GLOB SOURCES *.cpp)
-file(GLOB HEADERS *.hp*)
-add_executable(main ${SOURCES} ${HEADERS})
-
 find_package(OpenCV REQUIRED)
 if(OpenCV_FOUND)
     message(STATUS "OpenCV_INCLUDE_DIRS:${OpenCV_INCLUDE_DIRS}")
@@ -18,7 +14,6 @@ if(OpenCV_FOUND)
     message(STATUS "OpenCV_LIBS:${OpenCV_LIBS}")
     include_directories(${OpenCV_INCLUDE_DIRS})
     link_directories(${OpenCV_LIB_DIR})
-    target_link_libraries(main ${OpenCV_LIBS})
 endif()
 
 find_package(Boost REQUIRED COMPONENTS filesystem system date_time regex thread chrono program_options)
@@ -28,8 +23,28 @@ if(Boost_FOUND)
     message(STATUS "Boost_LIBRARIES:${Boost_LIBRARIES}")
     include_directories(${Boost_INCLUDE_DIRS})
     link_directories(${Boost_LIBRARY_DIRS})
-    target_link_libraries(main ${Boost_LIBRARIES})
 endif()
 
 include(${DLIB_ROOT}/dlib/cmake)
+
+# panorama
+add_executable(panorama panorama.cpp)
+target_link_libraries(panorama ${OpenCV_LIBS})
+target_link_libraries(panorama ${Boost_LIBRARIES})
+
+# selective_search
+add_executable(selective_search selective_search.cpp)
+target_link_libraries(selective_search ${OpenCV_LIBS})
+target_link_libraries(selective_search ${Boost_LIBRARIES})
+target_link_libraries(selective_search dlib)
+
+# training
+add_executable(train train.cpp HogUtil.hpp)
+target_link_libraries(train ${OpenCV_LIBS})
+target_link_libraries(train ${Boost_LIBRARIES})
+
+# main interface...?
+add_executable(main main.cpp TimeLapse.cpp TimeLapse.hpp)
+target_link_libraries(main ${OpenCV_LIBS})
+target_link_libraries(main ${Boost_LIBRARIES})
 target_link_libraries(main dlib)
