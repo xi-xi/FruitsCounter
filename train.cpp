@@ -27,15 +27,29 @@ void descriptorToTraindata(const std::vector<std::vector<float>>& descs, cv::Mat
 	}
 }
 
+void listDirectoryContents(const boost::filesystem::path& dir, std::vector<boost::filesystem::path>& dst) {
+	namespace bf = boost::filesystem;
+	for (const auto& entry : bf::directory_iterator(dir)) {
+		if (bf::is_directory(entry.path())) {
+			::listDirectoryContents(entry.path(), dst);
+		}
+		if (bf::is_regular_file(entry.path())) {
+			dst.push_back(entry.path());
+		}
+	}
+}
+
 void createTraindataLabel(const boost::filesystem::path& positive_path, const boost::filesystem::path& negative_path, cv::Mat& train_data, std::vector<int>& labels) {
 	namespace bf = boost::filesystem;
 	const int POSITIVE_LABEL = 1;
 	const int NEGATIVE_LABEL = -1;
 	std::vector<std::vector<float>> features;
 	labels.clear();
-	for (const auto& entry : bf::directory_iterator(positive_path)) {
-		std::cout << "POS_IMAGE:" << entry << std::endl;
-		cv::Mat img = cv::imread(entry.path().string());
+	std::vector<bf::path> pos_files;
+	::listDirectoryContents(positive_path, pos_files);
+	for (const auto& f : pos_files) {
+		std::cout << "POS_IMAGE:" << f << std::endl;
+		cv::Mat img = cv::imread(f.string());
 		if (img.empty())
 			continue;
 		std::vector<float> desc;
@@ -43,9 +57,11 @@ void createTraindataLabel(const boost::filesystem::path& positive_path, const bo
 		features.push_back(desc);
 		labels.push_back(POSITIVE_LABEL);
 	}
-	for (const auto& entry : bf::directory_iterator(negative_path)) {
-		std::cout << "NEG_IMAGE:" << entry << std::endl;
-		cv::Mat img = cv::imread(entry.path().string());
+	std::vector<bf::path> neg_files;
+	::listDirectoryContents(negative_path, neg_files);
+	for (const auto& f : neg_files) {
+		std::cout << "NEG_IMAGE:" << f << std::endl;
+		cv::Mat img = cv::imread(f.string());
 		if (img.empty())
 			continue;
 		std::vector<float> desc;
