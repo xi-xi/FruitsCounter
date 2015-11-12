@@ -43,6 +43,11 @@ add_executable(train train.cpp HogUtil.hpp)
 target_link_libraries(train ${OpenCV_LIBS})
 target_link_libraries(train ${Boost_LIBRARIES})
 
+# detect
+add_executable(detect detect.cpp HogUtil.hpp)
+target_link_libraries(detect ${OpenCV_LIBS})
+target_link_libraries(detect ${Boost_LIBRARIES})
+
 # main interface...?
 add_executable(main main.cpp TimeLapse.cpp TimeLapse.hpp)
 target_link_libraries(main ${OpenCV_LIBS})
