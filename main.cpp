@@ -6,6 +6,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
 #include "TimeLapse.hpp"
+#include "TomatoInformation.hpp"
 
 typedef cv::Vec3b Pixel;
 
@@ -82,7 +83,7 @@ int main(int argc, char** argv){
 	cv::Mat prob;
 	cv::Mat opened;
 	std::vector<std::vector<cv::Point>> contours;
-	std::vector<std::vector<cv::Point2d>> centers;
+	std::vector<std::vector<TomatoInformation>> tomatos;
 	if (!map.count("output")) {
 		cv::namedWindow("W");
 		cv::namedWindow("P");
@@ -96,18 +97,20 @@ int main(int argc, char** argv){
 		::calcTomatoProbability(frame, prob);
 		cv::threshold(prob, prob, 80, 255, CV_THRESH_BINARY);
 		::opening(prob, opened);
-		cv::findContours(opened.clone(), contours, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
-		centers.push_back(std::vector<cv::Point2d>());
+		cv::findContours(opened.clone(), contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_NONE);
+		tomatos.push_back(std::vector<::TomatoInformation>());
 		for (const auto& contour : contours) {
 			cv::Point2d center(0.0, 0.0);
 			for (const auto& c : contour) {
 				center.x += static_cast<double>(c.x) / contour.size();
 				center.y += static_cast<double>(c.y) / contour.size();
 			}
-			centers[centers.size() - 1].push_back(center);
+			tomatos[tomatos.size() - 1].push_back(
+				::TomatoInformation(cv::contourArea(contour), std::move(center))
+			);
 		}
-		for (const auto& center : centers[centers.size() - 1]) {
-			cv::circle(frame, center, 2, cv::Scalar(255, 0, 0), 5);
+		for (const auto& tomato : tomatos[tomatos.size() - 1]) {
+			cv::circle(frame, tomato.center(), 2, cv::Scalar(255, 0, 0), 5);
 		}
 		cv::drawContours(frame, contours, -1, cv::Scalar(0, 0, 255), 3);
 		if (map.count("output")) {
