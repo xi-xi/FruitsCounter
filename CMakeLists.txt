@@ -49,7 +49,7 @@ target_link_libraries(detect ${OpenCV_LIBS})
 target_link_libraries(detect ${Boost_LIBRARIES})
 
 # main interface...?
-add_executable(main main.cpp TimeLapse.cpp TimeLapse.hpp)
+add_executable(main main.cpp TimeLapse.cpp TimeLapse.hpp TomatoInformation.cpp TomatoInformation.hpp)
 target_link_libraries(main ${OpenCV_LIBS})
 target_link_libraries(main ${Boost_LIBRARIES})
 target_link_libraries(main dlib)
