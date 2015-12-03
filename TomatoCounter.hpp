@@ -10,6 +10,7 @@ public:
 	void update(const std::vector<TomatoInformation>& info);
 	std::size_t getCount() const;
 private:
+	static double distance(const TomatoInformation& a, const TomatoInformation& b);
 	std::vector<TomatoInformation> _previous_info;
 	std::size_t _count;
 	bool _initialized;

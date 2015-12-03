@@ -41,6 +41,7 @@ void opening(const cv::Mat& input, cv::Mat& output) {
 }
 
 int main(int argc, char** argv){
+	const double TOMATO_AREA_THRESH = 400.0;
 	namespace bp = boost::program_options;
 	namespace bf = boost::filesystem;
 	bp::options_description general_opt("Genral Options");
@@ -70,6 +71,7 @@ int main(int argc, char** argv){
 	cv::Mat opened;
 	std::vector<std::vector<cv::Point>> contours;
 	std::vector<std::vector<TomatoInformation>> tomatos;
+	auto optflow = cv::createOptFlow_DualTVL1();
 	TomatoCounter counter;
 	if (!map.count("output")) {
 		cv::namedWindow("W");
@@ -81,6 +83,8 @@ int main(int argc, char** argv){
 		lapce >> frame;
 		lapce.setCurrentFrame(lapce.currentFrame() + mul);
 		::calcTomatoProbability(frame, prob);
+		cv::GaussianBlur(prob, prob, cv::Size(9, 9), 0.0);
+		
 		cv::threshold(prob, prob, 90, 255, CV_THRESH_BINARY);
 		::opening(prob, opened);
 		cv::findContours(opened.clone(), contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_NONE);
@@ -91,12 +95,14 @@ int main(int argc, char** argv){
 				center.x += static_cast<double>(c.x) / contour.size();
 				center.y += static_cast<double>(c.y) / contour.size();
 			}
-			tomatos[tomatos.size() - 1].push_back(
-				::TomatoInformation(lapce.currentFrame(), cv::contourArea(contour), std::move(center))
-			);
+			auto area = cv::contourArea(contour);
+			if (area > TOMATO_AREA_THRESH) {
+				tomatos[tomatos.size() - 1].push_back(
+					::TomatoInformation(lapce.currentFrame(), area, std::move(center))
+					);
+			}
 		}
 		counter.update(tomatos[tomatos.size() - 1]);
-		std::cout << counter.getCount() << std::endl;
 		for (const auto& tomato : tomatos[tomatos.size() - 1]) {
 			cv::circle(frame, tomato.center(), 2, cv::Scalar(255, 0, 0), 5);
 		}
@@ -116,7 +122,7 @@ int main(int argc, char** argv){
 			cv::imshow("P", prob);
 			cv::imshow("O", opened);
 		}
-		auto key = cv::waitKey();
+		auto key = cv::waitKey(33);
 		if (key == 'q') {
 			break;
 		}
@@ -127,6 +133,7 @@ int main(int argc, char** argv){
 			mul = -1;
 		}
 	}
-	cv::waitKey();
+	std::cout << counter.getCount() << std::endl;
+//	cv::waitKey();
     return 0;
 }

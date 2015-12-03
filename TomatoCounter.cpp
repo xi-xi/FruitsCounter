@@ -2,7 +2,6 @@
 #include <tuple>
 #include <set>
 #include "TomatoInformation.hpp"
-#include <iostream>
 
 TomatoCounter::TomatoCounter()
 	:_count(0), _previous_info(), _initialized(false){
@@ -16,17 +15,20 @@ void TomatoCounter::update(const std::vector<TomatoInformation>& next) {
 		this->_initialized = true;
 		return;
 	}
+	if (next.empty()) {
+		return;
+	}
 	this->solveRelation(next);
 	this->_previous_info = next;
 }
 
 void TomatoCounter::solveRelation(const std::vector<TomatoInformation>& next) {
-	const double NEW_TOMATO_THRESH = 10;
+	const double NEW_TOMATO_THRESH = 100;
 	typedef std::tuple<double, std::size_t, std::size_t> TomatoRelation;
 	std::vector<TomatoRelation> rels;
 	for (std::size_t p = 0; p < this->_previous_info.size();++p) {
 		for (std::size_t n = 0; n < next.size(); ++n) {
-			rels.push_back(std::make_tuple(TomatoInformation::distance(this->_previous_info[p], next[n]),p,n));
+			rels.push_back(std::make_tuple(TomatoCounter::distance(this->_previous_info[p], next[n]),p,n));
 		}
 	}
 	std::sort(rels.begin(), rels.end(),
@@ -37,10 +39,15 @@ void TomatoCounter::solveRelation(const std::vector<TomatoInformation>& next) {
 	std::set<std::size_t> used_p;
 	std::set<std::size_t> used_n;
 	for (const auto& r : rels) {
-		std::cout << this->_previous_info[std::get<1>(r)].center() << next[std::get<2>(r)].center() << std::get<0>(r) << std::endl;
+		/*
+		std::cout << this->_previous_info[std::get<1>(r)].center()
+			<< this->_previous_info[std::get<1>(r)].area() << "\t" 
+			<< next[std::get<2>(r)].center() 
+			<< next[std::get<2>(r)].area() << "\t"
+			<< std::get<0>(r) << std::endl;
+			*/
 		if (used_p.find(std::get<1>(r)) != used_p.end()
 			&& used_n.find(std::get<2>(r)) != used_n.end()) {
-			std::cout << "continue" << std::endl;
 			continue;
 		}
 		else if (std::get<0>(r) > NEW_TOMATO_THRESH) {
@@ -57,4 +64,7 @@ std::size_t TomatoCounter::getCount() const{
 
 void TomatoCounter::setCount(const std::size_t& value) {
 	this->_count = value;
+}
+double TomatoCounter::distance(const TomatoInformation& a, const TomatoInformation& b) {
+	return cv::norm(a.center() - b.center()) + std::abs(a.frame() - b.frame());
 }
