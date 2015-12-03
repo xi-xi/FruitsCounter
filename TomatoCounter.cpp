@@ -12,6 +12,7 @@ void TomatoCounter::update(const std::vector<TomatoInformation>& next) {
 	if (!this->_initialized) {
 		this->_previous_info = next;
 		this->setCount(next.size());
+		this->_initialized = true;
 		return;
 	}
 	this->solveRelation(next);
