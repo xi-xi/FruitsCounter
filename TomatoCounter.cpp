@@ -2,6 +2,7 @@
 #include <tuple>
 #include <set>
 #include "TomatoInformation.hpp"
+#include <iostream>
 
 TomatoCounter::TomatoCounter()
 	:_count(0), _previous_info(), _initialized(false){
@@ -20,7 +21,7 @@ void TomatoCounter::update(const std::vector<TomatoInformation>& next) {
 }
 
 void TomatoCounter::solveRelation(const std::vector<TomatoInformation>& next) {
-	const double NEW_TOMATO_THRESH = 200;
+	const double NEW_TOMATO_THRESH = 10;
 	typedef std::tuple<double, std::size_t, std::size_t> TomatoRelation;
 	std::vector<TomatoRelation> rels;
 	for (std::size_t p = 0; p < this->_previous_info.size();++p) {
@@ -30,12 +31,13 @@ void TomatoCounter::solveRelation(const std::vector<TomatoInformation>& next) {
 	}
 	std::sort(rels.begin(), rels.end(),
 		[](const TomatoRelation& left, const TomatoRelation& right) {
-			return std::get<0>(left) > std::get<0>(right);
+			return std::get<0>(left) < std::get<0>(right);
 		}
 	);
 	std::set<std::size_t> used_p;
 	std::set<std::size_t> used_n;
 	for (const auto& r : rels) {
+		std::cout << this->_previous_info[std::get<1>(r)].center() << next[std::get<2>(r)].center() << std::get<0>(r) << std::endl;
 		if (used_p.find(std::get<1>(r)) == used_p.end()
 			|| used_n.find(std::get<2>(r)) == used_n.end()) {
 			continue;
