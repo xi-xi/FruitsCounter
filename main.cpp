@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <map>
 #include <cmath>
 #include <sstream>
 #include <opencv2/opencv.hpp>
@@ -34,24 +35,8 @@ void calcTomatoProbability(const cv::Mat& img, cv::Mat& dst) {
 }
 
 void opening(const cv::Mat& input, cv::Mat& output) {
-	cv::morphologyEx(
-		input,
-		output,
-		cv::MORPH_OPEN,
-		cv::getStructuringElement(cv::MORPH_RECT, cv::Size(15, 15)),
-		cv::Point(-1, -1),
-		1
-	);
-}
-
-static void onMouseMove(int event, int x, int y, int flags, void *userdata) {
-	if (cv::EVENT_MOUSEMOVE != event) {
-		return;
-	}
-	cv::Mat* frame_ptr = static_cast<cv::Mat*>(userdata);
-	std::stringstream ss;
-	ss << static_cast<int>(frame_ptr->at<unsigned char>(y, x));
-	cv::setWindowTitle("P", ss.str());
+	auto elem = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(15, 15));
+	cv::morphologyEx(input, output, cv::MORPH_OPEN, elem);
 }
 
 int main(int argc, char** argv){
@@ -87,7 +72,6 @@ int main(int argc, char** argv){
 	if (!map.count("output")) {
 		cv::namedWindow("W");
 		cv::namedWindow("P");
-		cv::setMouseCallback("P", ::onMouseMove, &prob);
 		cv::namedWindow("O");
 	}
 	std::size_t mul = 1;
@@ -95,7 +79,7 @@ int main(int argc, char** argv){
 		lapce >> frame;
 		lapce.setCurrentFrame(lapce.currentFrame() + mul);
 		::calcTomatoProbability(frame, prob);
-		cv::threshold(prob, prob, 80, 255, CV_THRESH_BINARY);
+		cv::threshold(prob, prob, 90, 255, CV_THRESH_BINARY);
 		::opening(prob, opened);
 		cv::findContours(opened.clone(), contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_NONE);
 		tomatos.push_back(std::vector<::TomatoInformation>());
@@ -106,7 +90,7 @@ int main(int argc, char** argv){
 				center.y += static_cast<double>(c.y) / contour.size();
 			}
 			tomatos[tomatos.size() - 1].push_back(
-				::TomatoInformation(cv::contourArea(contour), std::move(center))
+				::TomatoInformation(lapce.currentFrame(), cv::contourArea(contour), std::move(center))
 			);
 		}
 		for (const auto& tomato : tomatos[tomatos.size() - 1]) {
@@ -139,6 +123,6 @@ int main(int argc, char** argv){
 			mul = -1;
 		}
 	}
-
+	cv::waitKey();
     return 0;
 }
