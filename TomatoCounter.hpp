@@ -12,6 +12,7 @@ public:
 private:
 	std::vector<TomatoInformation> _previous_info;
 	std::size_t _count;
+	bool _initialized;
 	void setCount(const std::size_t& value);
 	void solveRelation(const std::vector<TomatoInformation>& next);
 };

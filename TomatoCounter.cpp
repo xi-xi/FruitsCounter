@@ -4,15 +4,17 @@
 #include "TomatoInformation.hpp"
 
 TomatoCounter::TomatoCounter()
-	:_count(0), _previous_info(){
+	:_count(0), _previous_info(), _initialized(false){
 
 }
 
 void TomatoCounter::update(const std::vector<TomatoInformation>& next) {
-	if (_previous_info.empty()) {
+	if (!this->_initialized) {
 		this->_previous_info = next;
+		this->setCount(next.size());
 		return;
 	}
+	this->solveRelation(next);
 	this->_previous_info = next;
 }
 
