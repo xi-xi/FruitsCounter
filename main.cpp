@@ -8,6 +8,7 @@
 #include <boost/program_options.hpp>
 #include "TimeLapse.hpp"
 #include "TomatoInformation.hpp"
+#include "TomatoCounter.hpp"
 
 typedef cv::Vec3b Pixel;
 
@@ -69,6 +70,7 @@ int main(int argc, char** argv){
 	cv::Mat opened;
 	std::vector<std::vector<cv::Point>> contours;
 	std::vector<std::vector<TomatoInformation>> tomatos;
+	TomatoCounter counter;
 	if (!map.count("output")) {
 		cv::namedWindow("W");
 		cv::namedWindow("P");
@@ -93,6 +95,8 @@ int main(int argc, char** argv){
 				::TomatoInformation(lapce.currentFrame(), cv::contourArea(contour), std::move(center))
 			);
 		}
+		counter.update(tomatos[tomatos.size() - 1]);
+		std::cout << counter.getCount() << std::endl;
 		for (const auto& tomato : tomatos[tomatos.size() - 1]) {
 			cv::circle(frame, tomato.center(), 2, cv::Scalar(255, 0, 0), 5);
 		}
@@ -112,7 +116,7 @@ int main(int argc, char** argv){
 			cv::imshow("P", prob);
 			cv::imshow("O", opened);
 		}
-		auto key = cv::waitKey(33);
+		auto key = cv::waitKey();
 		if (key == 'q') {
 			break;
 		}
