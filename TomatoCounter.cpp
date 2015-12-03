@@ -38,13 +38,16 @@ void TomatoCounter::solveRelation(const std::vector<TomatoInformation>& next) {
 	std::set<std::size_t> used_n;
 	for (const auto& r : rels) {
 		std::cout << this->_previous_info[std::get<1>(r)].center() << next[std::get<2>(r)].center() << std::get<0>(r) << std::endl;
-		if (used_p.find(std::get<1>(r)) == used_p.end()
-			|| used_n.find(std::get<2>(r)) == used_n.end()) {
+		if (used_p.find(std::get<1>(r)) != used_p.end()
+			&& used_n.find(std::get<2>(r)) != used_n.end()) {
+			std::cout << "continue" << std::endl;
 			continue;
 		}
 		else if (std::get<0>(r) > NEW_TOMATO_THRESH) {
 			this->setCount(this->getCount() + 1);
 		}
+		used_p.insert(std::get<1>(r));
+		used_n.insert(std::get<2>(r));
 	}
 }
 
