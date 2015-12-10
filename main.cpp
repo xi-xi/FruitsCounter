@@ -1,4 +1,6 @@
+#ifdef _DEBUG
 #include <iostream>
+#endif
 #include <vector>
 #include <map>
 #include <cmath>
@@ -69,9 +71,9 @@ int main(int argc, char** argv){
 	cv::Mat frame;
 	cv::Mat prob;
 	cv::Mat opened;
+	std::vector<cv::Point2f> points;
 	std::vector<std::vector<cv::Point>> contours;
 	std::vector<std::vector<TomatoInformation>> tomatos;
-	auto optflow = cv::createOptFlow_DualTVL1();
 	TomatoCounter counter;
 	if (!map.count("output")) {
 		cv::namedWindow("W");
@@ -84,7 +86,6 @@ int main(int argc, char** argv){
 		lapce.setCurrentFrame(lapce.currentFrame() + mul);
 		::calcTomatoProbability(frame, prob);
 		cv::GaussianBlur(prob, prob, cv::Size(9, 9), 0.0);
-		
 		cv::threshold(prob, prob, 90, 255, CV_THRESH_BINARY);
 		::opening(prob, opened);
 		cv::findContours(opened.clone(), contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_NONE);
@@ -102,7 +103,7 @@ int main(int argc, char** argv){
 					);
 			}
 		}
-		counter.update(tomatos[tomatos.size() - 1]);
+//		counter.update(tomatos[tomatos.size() - 1]);
 		for (const auto& tomato : tomatos[tomatos.size() - 1]) {
 			cv::circle(frame, tomato.center(), 2, cv::Scalar(255, 0, 0), 5);
 		}
@@ -126,10 +127,10 @@ int main(int argc, char** argv){
 		if (key == 'q') {
 			break;
 		}
-		if (0 <= key - '0' && key - '0' < 10) {
+		else if (0 <= key - '0' && key - '0' < 10) {
 			mul = key - '0';
 		}
-		if (key == '-') {
+		else if (key == '-') {
 			mul = -1;
 		}
 	}
