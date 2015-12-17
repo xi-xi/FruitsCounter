@@ -11,7 +11,7 @@
 typedef cv::Vec3b Pixel;
 
 double tomatoProb(const Pixel& pixel) {
-/*	Pixel tomato_color = Pixel(0, 0, 255);
+	/*  Pixel tomato_color = Pixel(0, 0, 255);
 	double tomato_variance = 0.1;
 	return std::exp(-cv::norm(pixel, tomato_color) / 255.0 / std::sqrt(3) * 2.0);
 	*/
@@ -20,8 +20,8 @@ double tomatoProb(const Pixel& pixel) {
 			std::abs(static_cast<double>(pixel[0]) - 90) / 90.0 - 1.0
 			+ (static_cast<double>(pixel[1]) - 255.0) / 255.0
 			- std::abs(static_cast<double>(pixel[2]) - 128.0) / 128.0
-		) / 3.0
-	);
+			) / 3.0
+		);
 }
 
 void calcTomatoProbability(const cv::Mat& img, cv::Mat& dst) {
@@ -29,12 +29,12 @@ void calcTomatoProbability(const cv::Mat& img, cv::Mat& dst) {
 	dst.create(img.size(), CV_64FC1);
 	cv::Mat_<Pixel> pixmat;
 	cv::cvtColor(img, pixmat, cv::COLOR_BGR2HSV);
-	pixmat.forEach([&](Pixel& pix, const int location[2]) ->void{
+	pixmat.forEach([&](Pixel& pix, const int location[2]) ->void {
 		dst.at<double>(location[0], location[1]) = ::tomatoProb(pix);
 	});
 }
 
-void resizeAndShow(cv::Mat& frame, const std::string& name, const cv::Size& size=cv::Size(300, 300)) {
+void resizeAndShow(cv::Mat& frame, const std::string& name, const cv::Size& size = cv::Size(300, 300)) {
 	cv::resize(frame, frame, size);
 	cv::imshow(name, frame);
 }
@@ -57,7 +57,7 @@ std::size_t countTomato(const std::vector<std::vector<cv::Rect>>& tomatos, const
 				double distance = std::sqrt(
 					std::pow(cur.x + cur.width * 0.5 - (pre.x + pre.width * 0.5), 2)
 					+ std::pow(cur.y + cur.height * 0.5 - (pre.y + pre.height * 0.5), 2)
-				);
+					);
 				if (min_dist > distance) {
 					min_dist = distance;
 					min_dist_index = index;
@@ -114,7 +114,7 @@ int main(int argc, char** argv) {
 		lapce.setCurrentFrame(lapce.currentFrame() + mul);
 		::calcTomatoProbability(frame, prob);
 		cv::blur(prob, prob, cv::Size(15, 15));
-//		cv::GaussianBlur(prob, prob, cv::Size(9, 9), 0.0);
+		//      cv::GaussianBlur(prob, prob, cv::Size(9, 9), 0.0);
 		prob.convertTo(converted_prob, CV_8U, 255);
 		cv::threshold(converted_prob, thresh, 210, 255, CV_THRESH_BINARY);
 		cv::erode(thresh, thresh, cv::Mat(), cv::Point(-1, -1), 3);
@@ -124,7 +124,7 @@ int main(int argc, char** argv) {
 		std::vector<cv::Rect> bounding_rects;
 		for (const auto& contour : contours) {
 			auto rect = cv::boundingRect(contour);
-			if(rect.area() >= 400.0)
+			if (rect.area() >= 400.0)
 				bounding_rects.push_back(rect);
 		}
 		for (const auto& rect : bounding_rects) {
@@ -162,10 +162,10 @@ int main(int argc, char** argv) {
 		tomato_rectangles,
 		[width, height](const cv::Point& a, const cv::Point& b) {
 		return true;
-		}
+	}
 	);
-	std::cout << "TOMATO: " <<count  << std::endl;
-	//	cv::waitKey();
+	std::cout << "TOMATO: " << count << std::endl;
+	//  cv::waitKey();
 	return 0;
 }
 
@@ -204,7 +204,7 @@ void calcTomatoProbability(const cv::Mat& img, cv::Mat& dst) {
 		for (std::size_t x = 0; x < img.cols; ++x) {
 			dst.at<unsigned char>(y, x) = static_cast<unsigned char>(
 				255 * ::tomatoProb(img.at<Pixel>(y, x))
-			);
+				);
 		}
 	}
 }
@@ -214,7 +214,7 @@ void opening(const cv::Mat& input, cv::Mat& output) {
 	cv::morphologyEx(input, output, cv::MORPH_OPEN, elem);
 }
 
-int main(int argc, char** argv){
+int main(int argc, char** argv) {
 	const double TOMATO_AREA_THRESH = 400.0;
 	namespace bp = boost::program_options;
 	namespace bf = boost::filesystem;
@@ -275,7 +275,7 @@ int main(int argc, char** argv){
 					);
 			}
 		}
-//		counter.update(tomatos[tomatos.size() - 1]);
+		//      counter.update(tomatos[tomatos.size() - 1]);
 		for (const auto& tomato : tomatos[tomatos.size() - 1]) {
 			cv::circle(frame, tomato.center(), 2, cv::Scalar(255, 0, 0), 5);
 		}
@@ -307,7 +307,7 @@ int main(int argc, char** argv){
 		}
 	}
 	std::cout << counter.getCount() << std::endl;
-//	cv::waitKey();
-    return 0;
+	//  cv::waitKey();
+	return 0;
 }
 #endif
