@@ -55,3 +55,10 @@ add_executable(main ${MAIN_SOURCES} ${MAIN_HEADERS})
 target_link_libraries(main ${OpenCV_LIBS})
 target_link_libraries(main ${Boost_LIBRARIES})
 target_link_libraries(main dlib)
+
+# main interface...?
+set(COUNTER_SOURCES counter.cpp TimeLapse.cpp)
+set(COUNTER_HEADERS counter.cpp TimeLapse.hpp)
+add_executable(counter ${COUNTER_SOURCES} ${COUNTER_HEADERS})
+target_link_libraries(counter ${OpenCV_LIBS})
+target_link_libraries(counter ${Boost_LIBRARIES})
