@@ -4,7 +4,6 @@ project(FruitsCounter)
 set(OpenCV_DIR "Where" CACHE PATH "Location of opencv_install_dir")
 set(BOOST_ROOT "Where" CACHE PATH "Location of boost install dir")
 set(BOOST_LIBRARYDIR "Where" CACHE PATH "Location of boost lib dir")
-set(DLIB_ROOT "where" CACHE PATH "Location of dlib root dir")
 set(Boost_USE_STATIC_LIBS ON)
 
 find_package(OpenCV REQUIRED)
