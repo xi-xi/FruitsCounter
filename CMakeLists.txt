@@ -4,7 +4,6 @@ project(FruitsCounter)
 set(OpenCV_DIR "Where" CACHE PATH "Location of opencv_install_dir")
 set(BOOST_ROOT "Where" CACHE PATH "Location of boost install dir")
 set(BOOST_LIBRARYDIR "Where" CACHE PATH "Location of boost lib dir")
-set(DLIB_ROOT "where" CACHE PATH "Location of dlib root dir")
 set(Boost_USE_STATIC_LIBS ON)
 
 find_package(OpenCV REQUIRED)
@@ -25,40 +24,9 @@ if(Boost_FOUND)
     link_directories(${Boost_LIBRARY_DIRS})
 endif()
 
-include(${DLIB_ROOT}/dlib/cmake)
-
-# panorama
-add_executable(panorama panorama.cpp)
-target_link_libraries(panorama ${OpenCV_LIBS})
-target_link_libraries(panorama ${Boost_LIBRARIES})
-
-# selective_search
-add_executable(selective_search selective_search.cpp)
-target_link_libraries(selective_search ${OpenCV_LIBS})
-target_link_libraries(selective_search ${Boost_LIBRARIES})
-target_link_libraries(selective_search dlib)
-
-# training
-add_executable(train train.cpp HogUtil.hpp)
-target_link_libraries(train ${OpenCV_LIBS})
-target_link_libraries(train ${Boost_LIBRARIES})
-
-# detect
-add_executable(detect detect.cpp HogUtil.hpp)
-target_link_libraries(detect ${OpenCV_LIBS})
-target_link_libraries(detect ${Boost_LIBRARIES})
-
 # main interface...?
-set(MAIN_SOURCES main.cpp TimeLapse.cpp TomatoInformation.cpp TomatoCounter.cpp)
-set(MAIN_HEADERS main.cpp TimeLapse.hpp TomatoInformation.hpp TomatoCounter.hpp)
+set(MAIN_SOURCES main.cpp TimeLapse.cpp)
+set(MAIN_HEADERS main.cpp TimeLapse.hpp)
 add_executable(main ${MAIN_SOURCES} ${MAIN_HEADERS})
 target_link_libraries(main ${OpenCV_LIBS})
 target_link_libraries(main ${Boost_LIBRARIES})
-target_link_libraries(main dlib)
-
-# main interface...?
-set(COUNTER_SOURCES counter.cpp TimeLapse.cpp)
-set(COUNTER_HEADERS counter.cpp TimeLapse.hpp)
-add_executable(counter ${COUNTER_SOURCES} ${COUNTER_HEADERS})
-target_link_libraries(counter ${OpenCV_LIBS})
-target_link_libraries(counter ${Boost_LIBRARIES})
