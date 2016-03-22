@@ -1,0 +1,483 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.10"/>
+<title>平成27年度特別実験I: main.cpp ファイル</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">平成27年度特別実験I
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 構築: Doxygen 1.8.10 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'検索');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>総合概要</span></a></li>
+      <li><a href="pages.html"><span>諸情報</span></a></li>
+      <li><a href="annotated.html"><span>クラス</span></a></li>
+      <li class="current"><a href="files.html"><span>ファイル</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="検索" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>ファイル一覧</span></a></li>
+      <li><a href="globals.html"><span>ファイルメンバ</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#typedef-members">型定義</a> &#124;
+<a href="#func-members">関数</a>  </div>
+  <div class="headertitle">
+<div class="title">main.cpp ファイル</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;map&gt;</code><br />
+<code>#include &lt;cmath&gt;</code><br />
+<code>#include &lt;sstream&gt;</code><br />
+<code>#include &lt;opencv2/opencv.hpp&gt;</code><br />
+<code>#include &lt;boost/filesystem.hpp&gt;</code><br />
+<code>#include &lt;boost/program_options.hpp&gt;</code><br />
+<code>#include &quot;<a class="el" href="_time_lapse_8hpp_source.html">TimeLapse.hpp</a>&quot;</code><br />
+</div>
+<p><a href="main_8cpp_source.html">[ソースコード]</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+型定義</h2></td></tr>
+<tr class="memitem:a2157cd034e908264dfb68b748ecc3d76"><td class="memItemLeft" align="right" valign="top">typedef cv::Vec3b&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a2157cd034e908264dfb68b748ecc3d76">Pixel</a></td></tr>
+<tr class="separator:a2157cd034e908264dfb68b748ecc3d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+関数</h2></td></tr>
+<tr class="memitem:a8d583d4accc0b86fa43e1d5a0598e85e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a8d583d4accc0b86fa43e1d5a0598e85e">tomatoProb</a> (const <a class="el" href="main_8cpp.html#a2157cd034e908264dfb68b748ecc3d76">Pixel</a> &amp;pixel)</td></tr>
+<tr class="separator:a8d583d4accc0b86fa43e1d5a0598e85e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e8d23d3dd4ff92afa4e0c1e8f3a1184"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a7e8d23d3dd4ff92afa4e0c1e8f3a1184">calcTomatoProbability</a> (const cv::Mat &amp;img, cv::Mat &amp;dst)</td></tr>
+<tr class="separator:a7e8d23d3dd4ff92afa4e0c1e8f3a1184"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07b879be28cf0d8bd5f6fc35cfa1d94d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a07b879be28cf0d8bd5f6fc35cfa1d94d">resizeAndShow</a> (cv::Mat &amp;frame, const std::string &amp;name, const cv::Size &amp;size=cv::Size(300, 300))</td></tr>
+<tr class="separator:a07b879be28cf0d8bd5f6fc35cfa1d94d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f773b2b5cabba9cc19a2ec0d3ae112e"><td class="memItemLeft" align="right" valign="top">cv::Point&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a8f773b2b5cabba9cc19a2ec0d3ae112e">rect2point</a> (const cv::Rect &amp;rect)</td></tr>
+<tr class="separator:a8f773b2b5cabba9cc19a2ec0d3ae112e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01af69ac82bcdc9a9ab78e0f724b40da"><td class="memTemplParams" colspan="2">template&lt;typename COUNTUP_FUNC &gt; </td></tr>
+<tr class="memitem:a01af69ac82bcdc9a9ab78e0f724b40da"><td class="memTemplItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a01af69ac82bcdc9a9ab78e0f724b40da">getIncrementalTomato</a> (const std::vector&lt; cv::Rect &gt; &amp;previous_tomato, const std::vector&lt; cv::Rect &gt; &amp;current_tomato, const COUNTUP_FUNC &amp;coutup_func)</td></tr>
+<tr class="separator:a01af69ac82bcdc9a9ab78e0f724b40da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada5ef3b4d76f7e0adaf98bb7d1d00051"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ada5ef3b4d76f7e0adaf98bb7d1d00051">side</a> (const std::pair&lt; cv::Point, cv::Point &gt; &amp;seg1, const cv::Point &amp;pos)</td></tr>
+<tr class="separator:ada5ef3b4d76f7e0adaf98bb7d1d00051"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d28a99087546b6beed0098fdd435e53"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a4d28a99087546b6beed0098fdd435e53">isCross</a> (const std::pair&lt; cv::Point, cv::Point &gt; &amp;seg1, const std::pair&lt; cv::Point, cv::Point &gt; &amp;seg2)</td></tr>
+<tr class="separator:a4d28a99087546b6beed0098fdd435e53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e689878cbf174db05b583fea4cf57d9"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a4e689878cbf174db05b583fea4cf57d9">distance</a> (const cv::Point &amp;a, const cv::Point &amp;b)</td></tr>
+<tr class="separator:a4e689878cbf174db05b583fea4cf57d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
+<tr class="separator:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">型定義詳解</h2>
+<a class="anchor" id="a2157cd034e908264dfb68b748ecc3d76"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef cv::Vec3b <a class="el" href="main_8cpp.html#a2157cd034e908264dfb68b748ecc3d76">Pixel</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>一ピクセルを表すtypedef </p>
+
+<p> <a class="el" href="main_8cpp_source.html">main.cpp</a> の <a class="el" href="main_8cpp_source.html#l00014">14</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<h2 class="groupheader">関数詳解</h2>
+<a class="anchor" id="a7e8d23d3dd4ff92afa4e0c1e8f3a1184"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void calcTomatoProbability </td>
+          <td>(</td>
+          <td class="paramtype">const cv::Mat &amp;&#160;</td>
+          <td class="paramname"><em>img</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">cv::Mat &amp;&#160;</td>
+          <td class="paramname"><em>dst</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>画像の各画素におけるトマトである確率を計算します</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">img</td><td>入力画像(BGR形式) </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">dst</td><td>出力結果 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>参照</dt><dd><a class="el" href="main_8cpp.html#a8d583d4accc0b86fa43e1d5a0598e85e">tomatoProb</a> </dd></dl>
+
+<p> <a class="el" href="main_8cpp_source.html">main.cpp</a> の <a class="el" href="main_8cpp_source.html#l00048">48</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a class="anchor" id="a4e689878cbf174db05b583fea4cf57d9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double distance </td>
+          <td>(</td>
+          <td class="paramtype">const cv::Point &amp;&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const cv::Point &amp;&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>二点間のユークリッド距離を計算します</p>
+<p>ここでの計算は </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ d = \sqrt{(a_x-b_x)^2 + (a_y - b_y)^2} \]" src="form_2.png"/>
+</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>点1 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>点2 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>ユークリッド距離 </dd></dl>
+
+<p> <a class="el" href="main_8cpp_source.html">main.cpp</a> の <a class="el" href="main_8cpp_source.html#l00160">160</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a class="anchor" id="a01af69ac82bcdc9a9ab78e0f724b40da"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename COUNTUP_FUNC &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t getIncrementalTomato </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; cv::Rect &gt; &amp;&#160;</td>
+          <td class="paramname"><em>previous_tomato</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; cv::Rect &gt; &amp;&#160;</td>
+          <td class="paramname"><em>current_tomato</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const COUNTUP_FUNC &amp;&#160;</td>
+          <td class="paramname"><em>coutup_func</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>トマトの増加量を計算します</p>
+<p>前のフレームにおけるトマト領域と、現在のフレームにおけるトマト領域との相関を計算し、 対応する領域をそれぞれひも付けます。 その後、それぞれのペアに対してcountup_funcによる評価を行い、tureであればカウントを増やし、 全体で増えたトマト量を計算し、返します。</p>
+<dl class="tparams"><dt>テンプレート引数</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">COUNTUP_FUNC</td><td>bool(cv::Point, cv::Point)の関数の型 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">previous_tomato</td><td>前のフレームにおけるトマトの矩形領域 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">current_tomato</td><td>現在フレームにおけるトマトの矩形領域 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">countup_func</td><td>増加するタイミングであるとみなす基準を表す関数 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>前のフレームから現在のフレームまでで増えたトマトの個数 </dd></dl>
+
+<p> <a class="el" href="main_8cpp_source.html">main.cpp</a> の <a class="el" href="main_8cpp_source.html#l00096">96</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a class="anchor" id="a4d28a99087546b6beed0098fdd435e53"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool isCross </td>
+          <td>(</td>
+          <td class="paramtype">const std::pair&lt; cv::Point, cv::Point &gt; &amp;&#160;</td>
+          <td class="paramname"><em>seg1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::pair&lt; cv::Point, cv::Point &gt; &amp;&#160;</td>
+          <td class="paramname"><em>seg2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>二本の線分が交差するかを判定して返します</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">seg1</td><td>線分一つ目 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">seg2</td><td>線分二つ目 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>線分が交差しているか? </dd></dl>
+
+<p> <a class="el" href="main_8cpp_source.html">main.cpp</a> の <a class="el" href="main_8cpp_source.html#l00143">143</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a class="anchor" id="a3c04138a5bfe5d72780bb7e82a18e627"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char **&#160;</td>
+          <td class="paramname"><em>argv</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p> <a class="el" href="main_8cpp_source.html">main.cpp</a> の <a class="el" href="main_8cpp_source.html#l00164">164</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a class="anchor" id="a8f773b2b5cabba9cc19a2ec0d3ae112e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">cv::Point rect2point </td>
+          <td>(</td>
+          <td class="paramtype">const cv::Rect &amp;&#160;</td>
+          <td class="paramname"><em>rect</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>矩形の中心位置を計算し、返します</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">rect</td><td>矩形 [out] 重心位置 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p> <a class="el" href="main_8cpp_source.html">main.cpp</a> の <a class="el" href="main_8cpp_source.html#l00077">77</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a class="anchor" id="a07b879be28cf0d8bd5f6fc35cfa1d94d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void resizeAndShow </td>
+          <td>(</td>
+          <td class="paramtype">cv::Mat &amp;&#160;</td>
+          <td class="paramname"><em>frame</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const cv::Size &amp;&#160;</td>
+          <td class="paramname"><em>size</em> = <code>cv::Size(300,&#160;300)</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>画像を適当に縮小して表示します</p>
+<p>[in] frame 画像 </p><dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>ウインドウ名 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>出力サイズ </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p> <a class="el" href="main_8cpp_source.html">main.cpp</a> の <a class="el" href="main_8cpp_source.html#l00065">65</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a class="anchor" id="ada5ef3b4d76f7e0adaf98bb7d1d00051"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int side </td>
+          <td>(</td>
+          <td class="paramtype">const std::pair&lt; cv::Point, cv::Point &gt; &amp;&#160;</td>
+          <td class="paramname"><em>seg1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const cv::Point &amp;&#160;</td>
+          <td class="paramname"><em>pos</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>直線に対して点がどっち側にあるかを計算し、整数で返します</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">seg1</td><td>直線が通過する二点 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pos</td><td>判定したい点 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>どっち側にあるかを整数で表す </dd></dl>
+
+<p> <a class="el" href="main_8cpp_source.html">main.cpp</a> の <a class="el" href="main_8cpp_source.html#l00130">130</a> 行目に定義があります。</p>
+
+</div>
+</div>
+<a class="anchor" id="a8d583d4accc0b86fa43e1d5a0598e85e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double tomatoProb </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="main_8cpp.html#a2157cd034e908264dfb68b748ecc3d76">Pixel</a> &amp;&#160;</td>
+          <td class="paramname"><em>pixel</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>そのピクセルがトマトである確率を色情報を元に計算して返します</p>
+<p>この際、用いられる計算式は以下のとおりです。 </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ p(x,y) = exp\left( \frac{1}{3}\left(\frac{|h(x,y)-90|}{90} - 1 - \frac{|s(x,y)-128|}{128} - \frac{255-l(x,y)}{255}\right)\right) \]" src="form_0.png"/>
+</p>
+<p> ここで、 <img class="formulaInl" alt="$h(x,y),s(x,y),l(x,y)$" src="form_1.png"/>は画像中の位置(x,y)における色相、彩度、輝度を表します</p>
+<dl class="params"><dt>引数</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pixel</td><td>その画素のhsl </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>戻り値</dt><dd>その画素がトマトである確率 </dd></dl>
+
+<p> <a class="el" href="main_8cpp_source.html">main.cpp</a> の <a class="el" href="main_8cpp_source.html#l00031">31</a> 行目に定義があります。</p>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+構築: &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.10
+</small></address>
+</body>
+</html>
